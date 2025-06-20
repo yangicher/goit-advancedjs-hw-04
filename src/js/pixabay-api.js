@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const API_KEY = '50706028-1c89dce29f588a1d4e8ec62d3';
 const BASE_URL = 'https://pixabay.com/api/';
 
@@ -14,11 +16,7 @@ export function loadImages(query, page = 1, limit = 15) {
 
   return axios.get(BASE_URL, { params: searchParams })
     .then(response => {
-      const { hits } = response.data;
-      if (hits.length === 0) {
-        throw new Error('No images found');
-      }
-      return hits;
+      return response.data;
     })
     .catch(error => {
       console.error('Error loading images:', error.message || error);

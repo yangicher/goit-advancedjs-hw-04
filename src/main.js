@@ -34,6 +34,8 @@ function toastErrorOptions(message) {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
+  console.error('submit');
+
   const query = form.elements.query.value.trim();
   form.reset();
   if (!query) {
@@ -48,22 +50,26 @@ form.addEventListener('submit', async (e) => {
   loadedImages = 0;
 
   try {
-    const images = await loadImages(query, currentPage, limitPerPage);
-    totalImages = images.length;
+    console.error('Submit:', query);
+    const data = await loadImages(query, currentPage, limitPerPage);
+    console.error('RES:', data.hits || error);
 
-    if (!images.length) {
+    totalImages = data.totalHits;
+    console.error('totalImages: ', totalImages);
+    if (!data.hits.length) {
       iziToast.show(toastErrorOptions('Sorry, there are no images matching your search query. Please try again!'));
       return;
     }
-    loadedImages += images.length;
+    loadedImages += data.hits.length;
 
-    renderGallery(images);
+    renderGallery(data.hits);
     lightbox.refresh();
 
     if (loadedImages < totalImages) {
       showElement(loadMoreBtn);
     }
   } catch (error) {
+    console.error('SubmitError: ', error.message);
     iziToast.show(toastErrorOptions('Something went wrong. Please try again later.'));
   } finally {
     hideElement(loader);
@@ -95,6 +101,8 @@ loadMoreBtn.addEventListener('click', async () => {
       showElement(loadMoreBtn);
     }
   } catch (error) {
+    //main.js:104 Failed to load more images:  images.map is not a function
+    console.error('Failed to load more images: ', error.message);
     iziToast.show(toastErrorOptions('Failed to load more images.'));
   } finally {
     hideElement(loader);
