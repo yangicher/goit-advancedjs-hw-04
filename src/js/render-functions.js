@@ -1,12 +1,11 @@
 const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
 
 export function clearGallery() {
   gallery.innerHTML = '';
 }
 
 export function renderGallery(images) {
-  gallery.innerHTML = images
+  gallery.insertAdjacentHTML('beforeend', images
     .map(
       ({
          webformatURL,
@@ -42,7 +41,7 @@ export function renderGallery(images) {
       </li>
     `
     )
-    .join('');
+    .join(''));
 }
 
 export function showElement(element) {

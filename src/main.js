@@ -7,6 +7,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.form');
 const loadMoreBtn = document.querySelector('.load-more');
+const loader = document.querySelector('.loader');
 
 let currentPage = 1;
 let currentQuery = '';
