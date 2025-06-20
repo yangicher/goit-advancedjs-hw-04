@@ -45,10 +45,10 @@ export function renderGallery(images) {
     .join('');
 }
 
-export function showLoader() {
-  loader.classList.remove('hidden');
+export function showElement(element) {
+  element.classList.remove('hidden');
 }
 
-export function hideLoader() {
-  loader.classList.add('hidden');
+export function hideElement(element) {
+  element.classList.add('hidden');
 }

@@ -50,3 +50,11 @@
   line-height: 16px;
   font-weight: 600;
 }
+
+.load-more {
+  display: block;
+  margin: 32px auto 0;
+}
+.load-more.hidden {
+  display: none;
+}
