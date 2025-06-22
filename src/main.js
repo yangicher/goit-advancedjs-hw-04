@@ -44,11 +44,12 @@ form.addEventListener('submit', async (e) => {
   clearGallery();
   showElement(loader);
 
+  currentQuery = query;
   currentPage = 1;
   loadedImages = 0;
 
   try {
-    const data = await loadImages(query, currentPage, limitPerPage);
+    const data = await loadImages(currentQuery, currentPage, limitPerPage);
     totalImages = data.totalHits;
     if (!data.hits.length) {
       iziToast.show(toastErrorOptions('Sorry, there are no images matching your search query. Please try again!'));
@@ -61,6 +62,9 @@ form.addEventListener('submit', async (e) => {
 
     if (loadedImages < totalImages) {
       showElement(loadMoreBtn);
+    }
+    else {
+      hideElement(loadMoreBtn);
     }
   } catch (error) {
     console.error('SubmitError: ', error.message);
@@ -97,6 +101,8 @@ loadMoreBtn.addEventListener('click', async () => {
   } catch (error) {
     console.error('Failed to load more images: ', error.message);
     iziToast.show(toastErrorOptions('Failed to load more images.'));
+    currentPage -= 1;
+    showElement(loadMoreBtn);
   } finally {
     hideElement(loader);
   }
